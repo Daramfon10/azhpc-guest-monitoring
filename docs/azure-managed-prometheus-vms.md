@@ -34,6 +34,7 @@ This document outlines the steps required to collect infrastructure metrics from
 ---
 
 ## Author the Data Collection Rule (DCR)
+This section guides you through creating the Data Collection Rule (DCR) that configures metric collection and sends GPU/IB/node telemetry to your Azure Monitor Workspace. Update the placeholders with your workspace details before deploying the DCR.
 
 1. Update `accountResourceId` and `location` in the [DCR JSON](../scripts/vm-vmss/dcr/sample-dcr.json). Update the `accountResourceID` in the destination section of the sample data collection rule with the Azure monitor workspace ARM ID that was saved earlier. Also update the `location` property with the location your workspace was created in (e.g. japaneast/eastus)
 
@@ -63,6 +64,8 @@ This document outlines the steps required to collect infrastructure metrics from
 
 ## Author Azure Monitor Policy
 
+This section walks you through creating an Azure Policy that automatically installs the Azure Monitor Agent (AMA) on your HPC VMs/VMSS instances and associates them with the Data Collection Rule (DCR) you created earlier. This ensures that all the nodes created in your scale set are consistently onboarded for metric collection.
+
 1. Go to [Portal](https://portal.azure.com) → Policy → Definitions → Policy Definition 
 ![Alt text](../assets/policy-definition.png)
 2.	Select the subscription, enter a policy name (for example, “Deploy Azure Monitor Agent and Associate Data Collection Rules with HPC VMs”), then paste the [Policy JSON](../scripts/vm-vmss/policy/sample-policy.json) into the policy rule section and save. 
@@ -86,7 +89,7 @@ az vmss create   --resource-group <rg>   --name <vmss-name>   --image "microsoft
 ---
 
 ## Querying / Visualizing in Grafana
-
+In this section, you’ll connect Grafana to Azure Managed Prometheus and import dashboards to visualize GPU, IB, and node metrics from your VM/VMSS cluster.
 1. Follow these steps to create and configure a Prometheus data source in Grafana.
 ![Alt text](../assets/grafana-datasource.png)
     - In the prometheus data source section, update the following fields:
@@ -109,6 +112,7 @@ az vmss create   --resource-group <rg>   --name <vmss-name>   --image "microsoft
 ![Alt text](../assets/node-dashboard.png)
 
 ## Troubleshooting
+Use this section to troubleshoot missing metrics, exporter issues, or Azure Monitor ingestion problems on your VM/VMSS nodes.
 SSH into one of your virtual machines and run the following checks, outputs should be similar to what is seen below:
 ### Check Azure Monitor Agent
 ```bash
