@@ -1,6 +1,6 @@
 # Azure Managed Prometheus on VM/VMSS via Azure Policy
 
-This document outlines the steps required to collect infrastructure metrics from workloads running on **N-Series** and **H-Series** VMSS clusters using **Azure Managed Prometheus**.
+This document outlines the steps required to collect infrastructure metrics from workloads running on **N-Series** and **H-Series** VMSS clusters using **Azure Managed Prometheus** and **Azure Managed Grafana**.
 
 ---
 
@@ -17,6 +17,11 @@ This document outlines the steps required to collect infrastructure metrics from
    - Grafana Admin
 
 3. **Create Azure Managed Grafana Workspace using [Portal](https://learn.microsoft.com/en-us/azure/managed-grafana/quickstart-managed-grafana-portal) or [CLI](https://learn.microsoft.com/en-us/azure/managed-grafana/quickstart-managed-grafana-cli)**
+   
+   During creation add tag:
+   ```
+   DisableMicrosoftPrometheusPlugin: true
+   ```
 
 4. **[Create](https://learn.microsoft.com/en-us/azure/azure-monitor/metrics/azure-monitor-workspace-manage?tabs=azure-portal) Azure Monitor Workspace**  
    During creation add tag:
