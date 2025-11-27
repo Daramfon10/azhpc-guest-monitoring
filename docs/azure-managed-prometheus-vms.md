@@ -112,7 +112,7 @@ In this section, you’ll connect Grafana to Azure Managed Prometheus and import
         - Save and test the new data source
 
 3. Go to Grafana → Dashboard → New → Import Dashboard
-4. Download or copy the content of each of the following [dashboards](https://github.com/Azure/cyclecloud-monitoring/tree/main/infra/dashboards) into your Grafana instance. Click on Load to save 
+4. Download or copy the content of each of the following [dashboards](../dashboards/) into your Grafana instance. Click on Load to save 
 5. In the dashboards section you can navigate to a dashboard of your choice to access GPU & Node views
 ![Alt text](../assets/node-dashboard.png)
 
