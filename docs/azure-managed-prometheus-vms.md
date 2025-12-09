@@ -24,10 +24,7 @@ This document outlines the steps required to collect infrastructure metrics from
    ```
 
 4. **[Create](https://learn.microsoft.com/en-us/azure/azure-monitor/metrics/azure-monitor-workspace-manage?tabs=azure-portal) Azure Monitor Workspace**  
-   During creation add tag:
-   ```
-   DisableMicrosoftPrometheusPlugin: true
-   ```
+
    Once the workspace is created:
    - Make sure to [link the Grafana workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/metrics/azure-monitor-workspace-manage?tabs=azure-portal#link-a-grafana-workspace) that was created above to the Azure monitor workspace.
    - Run the command below to get the **ARM ID** of the resource. Save the output as this will be needed in the author DCR section below.
@@ -112,7 +109,7 @@ In this section, you’ll connect Grafana to Azure Managed Prometheus and import
         - Save and test the new data source
 
 3. Go to Grafana → Dashboard → New → Import Dashboard
-4. Download or copy the content of each of the following [dashboards](https://github.com/Azure/cyclecloud-monitoring/tree/main/infra/dashboards) into your Grafana instance. Click on Load to save 
+4. Download or copy the content of each of the following [dashboards](../dashboards/) into your Grafana instance. Click on Load to save 
 5. In the dashboards section you can navigate to a dashboard of your choice to access GPU & Node views
 ![Alt text](../assets/node-dashboard.png)
 
