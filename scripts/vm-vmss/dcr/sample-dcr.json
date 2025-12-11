@@ -54,7 +54,7 @@
     "destinations": {
       "monitoringAccounts": [
         {
-          "accountResourceId": "/subscriptions/16d7fc29-159c-4855-99b5-222e04b9a7ba/resourceGroups/DA-AMA-Test2/providers/microsoft.monitor/accounts/DA-AMW-2",
+          "accountResourceId": "<YOUR-AZURE-MONITOR-WORKSPACE-ARM-ID>",
           "name": "myMonAccountDest"
         }
       ]
@@ -70,5 +70,5 @@
       }
     ]
   },
-  "location": "japaneast"
+  "location": "<WORKSPACE-REGION>"
 }

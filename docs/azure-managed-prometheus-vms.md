@@ -82,11 +82,17 @@ This section walks you through creating an Azure Policy that automatically insta
 
 ## Deploy Your VM/VMSS
 
-Create VMSS instance. Bash script to install DCGM and Node exporter can be found [here](../scripts/vm-vmss/exporters/install.sh). The file can be downloaded or copied and saved to your local machine. 
+Create VM/VMSS instance. Bash script to install DCGM and Node exporter can be found [here](../scripts/vm-vmss/exporters/install.sh). The file can be downloaded or copied and saved to your local machine. 
 
 ```bash
-az vmss create   --resource-group <rg>   --name <vmss-name>   --image "microsoft-dsvm:ubuntu-hpc:2204:latest"   --vm-sku <sku>   --instance-count <count>   --admin-username <admin>   --location <region>   --public-ip-per-vm   --custom-data <install-script>
+az vm create --resource-group <rg> --name <vm-name> --image "microsoft-dsvm:ubuntu-hpc:2204:latest" --size <sku> --admin-username <admin> --location <region> --custom-data <install-script>
 ```
+
+```bash
+az vmss create --resource-group <rg> --name <vmss-name> --image "microsoft-dsvm:ubuntu-hpc:2204:latest" --vm-sku <sku> --instance-count <count> --admin-username <admin> --location <region> --public-ip-per-vm --custom-data <install-script>
+```
+
+**Note**: Selecting the ubuntu-hpc image ensures the VM/VMSS has the necessary GPU driver stack and HPC runtime dependencies preinstalled, which the DCGM exporter relies on. This simplifies deployment and avoids missing-dependency failures during exporter startup.
 
 ---
 
