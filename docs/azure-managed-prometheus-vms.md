@@ -57,7 +57,70 @@ This section guides you through creating the Data Collection Rule (DCR) that con
    "location": "<workspace-region>"
    }
    ```
-2. Create the DCR using AzCLI. Use the `2024-03-11` API version:
+
+2. **Optional:** The sample DCR provided above includes scrape configs for Node Exporter and DCGM exporter by default. To scrape additional exporters (for example, slurm exporter), you can extend the `scrape_configs` section of the DCR. Below is an example that adds a custom exporter while keeping the built-in exporters:
+
+   ***Be sure to update `<CUSTOM-PORT>` to the actual port your exporter listens on.***
+
+   ```
+   {
+   "properties": {
+      ...
+      "dataSources": {
+         "prometheusForwarder": [
+         {
+            ...
+            "customVMScrapeConfig": {
+               ...
+               "scrape_configs": [
+               {
+                  "job_name": "Microsoft-node_exporter",
+                  "static_configs": [
+                     { "targets": ["localhost:9100"] }
+                  ],
+                  "metric_relabel_configs": [
+                     {
+                     "target_label": "vm_instance",
+                     "replacement": "${env:HOSTNAME:-missedIt}"
+                     }
+                  ]
+               },
+               {
+                  "job_name": "Microsoft-gpu_exporter",
+                  "static_configs": [
+                     { "targets": ["localhost:9400"] }
+                  ],
+                  "metric_relabel_configs": [
+                     {
+                     "target_label": "vm_instance",
+                     "replacement": "${env:HOSTNAME:-missedIt}"
+                     }
+                  ]
+               },
+               {
+                  "job_name": "my-custom-exporter",
+                  "static_configs": [
+                     { "targets": ["localhost:<CUSTOM-PORT>"] }
+                  ],
+                  "metric_relabel_configs": [
+                     {
+                     "target_label": "vm_instance",
+                     "replacement": "${env:HOSTNAME:-missedIt}"
+                     }
+                  ]
+               }
+               ]
+            }
+         }
+         ]
+      },
+      ...
+   },
+   "location": "..."
+   }
+   ```
+
+3. Create the DCR using AzCLI. Use the `2024-03-11` API version:
    ```
    az rest --method put --url https://management.azure.com/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.Insights/dataCollectionRules/<dcr-name>?api-version=2024-03-11 --body "@your_rule_file.json"
    ```
